@@ -9,6 +9,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const compression = require('compression'); // this will compress the responses sent to the client whether it is a html or css code.
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require(`./controllers/errorController`);
@@ -75,10 +76,13 @@ app.use(
 	})
 ); // Ignores the first parameter.
 
+app.use(compression());
+
 // Test middleware
 app.use((req, res, next) => {
 	req.requestTime = new Date().toISOString(); // learn about this date thing
 	console.log(req.cookies);
+	// console.log(req.headers);
 	// console.log(req.headers);
 	next();
 });

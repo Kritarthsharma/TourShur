@@ -70,6 +70,8 @@ reviewSchema.statics.calcAverageRatings = async function(tourId) {
 			}
 		}
 	]); // In statics method this points to the current model. Aggregate is only called on models.
+
+	//console.log(stats);
 	if (stats.length > 0) {
 		await Tour.findByIdAndUpdate(tourId, {
 			// this returns a promise.
@@ -97,7 +99,7 @@ reviewSchema.pre(/^findOneAnd/, async function(next) {
 	// findByIdAndUpdate and findByIdAndDelete is just a shorthand of findOneAndUpdate and findOneAndDelete so we can also use findOneAnd here in regex.
 	this.r = await this.findOne(); // here this points to the query object and not the document. findOne just finds the first document that matches the query and returns it. Here we can execute a query and that will give us the current document.
 	// We are saving the result to the query object to use it in other middlewares.
-	console.log(this.r);
+	//console.log(this.r);
 });
 
 /*So basically we couldn't have executed the calcAverageRatings function in pre middleware because the data wouldn't have loaded
