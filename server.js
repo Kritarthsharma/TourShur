@@ -41,3 +41,10 @@ process.on('unhandledRejection', (err) => {
 		process.exit(1); // 0 stands for success and 1 for failure.
 	});
 });
+
+process.on('SIGTERM', () => {
+	console.log('👋🏻 SIGTERM RECEIVED. Shutting down gracefully.');
+	server.close(() => {
+		console.log('💥 Process terminated!');
+	});
+});

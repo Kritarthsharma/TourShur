@@ -22,6 +22,8 @@ const viewRouter = require('./routes/viewRoutes');
 // Start express app
 const app = express();
 
+app.enable('trust proxy');
+
 app.set('view engine', 'pug'); // To set the template engine we are gonna use in application. We don't need to install and require this it will be internally automatically done by express.
 app.set('views', path.join(__dirname, 'views'));
 
