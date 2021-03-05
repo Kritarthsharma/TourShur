@@ -1,0 +1,58 @@
+extends base 
+
+block content
+  main.main
+    .card-container
+
+        each tour in tours
+          .card
+              .card__header
+                .card__picture
+                  .card__picture-overlay &nbsp;
+                  img.card__picture-img(src=`/img/tours/${tour.imageCover}`, alt=`${tour.name}`)
+                h3.heading-tertirary
+                  span= tour.name
+
+              .card__details
+                h4.card__sub-heading= `${tour.difficulty} ${tour.duration}-day tour`
+                p.card__text= tour.summary
+                .card__data
+                  svg.card__icon
+                    use(xlink:href='/img/icons.svg#icon-map-pin')
+                  span= tour.startLocation.description
+                .card__data
+                  svg.card__icon
+                    use(xlink:href='/img/icons.svg#icon-calendar')
+                  span= tour.startDates[0].toLocaleString('en-us', {month: 'long', year: 'numeric'})
+                .card__data
+                  svg.card__icon
+                    use(xlink:href='/img/icons.svg#icon-flag')
+                  span= `${tour.locations.length} stops`
+                .card__data
+                  svg.card__icon
+                      use(xlink:href='/img/icons.svg#icon-user')
+                  span= `${tour.maxGroupSize} people`
+
+              .card__footer
+                p
+                  span.card__footer-value= `₹${tour.price}`
+                  | 
+                  span.card__footer-text per person
+                p.card__ratings
+                  span.card__footer-value= tour.ratingsAverage
+                  | 
+                  span.card__footer-text= `rating (${tour.ratingsQuantity})`
+                a.btn.btn--green.btn--small(href=`/tour/${tour.slug}`) Details
+
+
+
+//- To select all the tour in tours and apply this card functionality
+   we can also use loop in this basically to apply this card style in every 9 tours
+   we have used a loop in 7th line.
+
+   = You have to use the equals sign so Pug knows that the text after it is JavaScript (i.e. a variable) and not regular text.
+   and then we have used string literals in it otherwise if no equal we would have used # and no $ in string template.
+   h4.card__sub-heading #{tour.difficulty} #{tour.duration}-day tour here we also don't use quotes. 
+
+   whenever we need space between two inline elements we can use (|) this pipe like operator between them 
+   to give them space in between and one more thing we also need to add a space after that pipeline manually.
