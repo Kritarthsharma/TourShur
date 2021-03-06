@@ -18,6 +18,7 @@ const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
+const bookingController = require('./routes/bookingController');
 const viewRouter = require('./routes/viewRoutes');
 
 // Start express app
@@ -70,6 +71,8 @@ const limiter = rateLimit({
 	message: 'Too many requests from this IP, please try again in an hour!'
 });
 app.use('/api', limiter); // Will only affect those routes which starts from api.
+
+app.post('/webhook-checkout', app.use(express.raw({ type: 'application/json' })), bookingController.webhookCheckout); // We have implemented this route here because the stripe will sent a body in a raw form in a string and basically the stripe function needs the string to not to be in a json format as in the next middleware it will be converted into json format that's why we have applied the route before it.
 
 // Body parser, reading data from body into req.body without this the object of the body cannot be parsed.
 app.use(express.json({ limit: '10kb' })); //middleware ..... Limit the amount of data that can be sent in a body in a post or patch request. Body larger than 10kb will not be accepted.
