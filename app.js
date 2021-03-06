@@ -10,6 +10,7 @@ const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
 const compression = require('compression'); // this will compress the responses sent to the client whether it is a html or css code.
+const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require(`./controllers/errorController`);
@@ -28,6 +29,16 @@ app.set('view engine', 'pug'); // To set the template engine we are gonna use in
 app.set('views', path.join(__dirname, 'views'));
 
 // 1)GLOBAL MIDDLEWARES
+// Implement CORS
+app.use(cors()); // code to allow all other websites for the cross origin resource sharing.
+// Access-Control-Allow-Origin *
+// api.tourshur.com, front-end tourshur.com
+// app.use(cors({
+// 	origin: 'https://www.tourshur.com' // Example code to allow one specific website for the cross origin resource sharing.
+// }))
+
+app.options('*', cors()); // Another http method like get, post etc. option to allow all the routes of our api for the cross origin resource sharing.
+// app.options('/api/v1/tours/:id', cors()) // option to allow only one specific route of our api for the cross origin resource sharing.
 
 // Serving static files
 app.use(express.static(path.join(__dirname, 'public'))); // 127.0.0.1:3000/overview.html public is defined in the middleware as a root folder so no need to put public in a url.
