@@ -9,6 +9,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const compression = require('compression'); // this will compress the responses sent to the client whether it is a html or css code.
 const cors = require('cors');
 
@@ -72,7 +73,7 @@ const limiter = rateLimit({
 });
 app.use('/api', limiter); // Will only affect those routes which starts from api.
 
-app.post('/webhook-checkout', app.use(express.raw({ type: 'application/json' })), bookingController.webhookCheckout); // We have implemented this route here because the stripe will sent a body in a raw form in a string and basically the stripe function needs the string to not to be in a json format as in the next middleware it will be converted into json format that's why we have applied the route before it.
+app.post('/webhook-checkout', bodyParser.raw({ type: 'application/json' }), bookingController.webhookCheckout); // We have implemented this route here because the stripe will sent a body in a raw form in a string and basically the stripe function needs the string to not to be in a json format as in the next middleware it will be converted into json format that's why we have applied the route before it.
 
 // Body parser, reading data from body into req.body without this the object of the body cannot be parsed.
 app.use(express.json({ limit: '10kb' })); //middleware ..... Limit the amount of data that can be sent in a body in a post or patch request. Body larger than 10kb will not be accepted.
