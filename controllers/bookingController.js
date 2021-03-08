@@ -16,7 +16,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
 		// success_url: `${req.protocol}://${req.get('host')}/?tour=${req.params.tourId}&user=${req.user
 		// 	.id}&price=${tour.price}`, // not really a secure way of success page as anyone can access this route and do the booking without paying up.
 
-		success_url: `${req.protocol}://${req.get('host')}/my-tours`,
+		success_url: `${req.protocol}://${req.get('host')}/my-tours?alert=booking`,
 		cancel_url: `${req.protocol}://${req.get('host')}/tour/${tour.slug}`,
 		customer_email: req.user.email,
 		client_reference_id: req.params.tourId, // this field is gonna allow us to pass in some data about the session we are currently creating. For hosted sites to create new booking in database.
