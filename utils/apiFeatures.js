@@ -13,7 +13,7 @@ class APIFeatures {
 
 		//1B) Advanced Filtering
 		let queryStr = JSON.stringify(queryObj);
-		queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+		queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`); // Converts the normal gte into a $gte for mongodb query.
 		this.query = this.query.find(JSON.parse(queryStr)); //.where('ratingsAverage').gte(4.8); //find method returns an array of all the objects
 
 		return this;

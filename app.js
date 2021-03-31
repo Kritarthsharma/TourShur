@@ -115,6 +115,6 @@ app.all('*', (req, res, next) => {
 	next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404)); //Whenever we pass any argument to the next function it will assume that it is an error and it will skip all the remaining middleware stack and send the error that we passed in.
 }); // this runs for all http methods
 
-app.use(globalErrorHandler); // Error handling middleware
+app.use(globalErrorHandler); // automatically recognizes it as a Error handling middleware because it contains 4 arguments
 
 module.exports = app;

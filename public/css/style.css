@@ -1025,6 +1025,30 @@ img.picture-box__img:hover {
 	grid-gap: 7rem;
 }
 
+@media (max-width: 500px) {
+	.header {
+		padding: 0px;
+	}
+	.main {
+		padding: 0px;
+	}
+	.card-container {
+		grid-template-columns: 1fr;
+		margin-top: 2rem;
+		grid-gap: 2rem;
+	}
+	.footer {
+		padding: 0px;
+		margin-top: 2rem;
+	}
+	.footer__nav li:first-child {
+		margin-left: 0.5rem;
+	}
+	.footer__nav li:last-child {
+		margin-right: 0.5rem;
+	}
+}
+
 .card {
 	border-radius: 3px;
 	overflow: hidden;

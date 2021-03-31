@@ -128,7 +128,7 @@ const tourSchema = new mongoose.Schema(
 // Compound index
 // While using compound keep in mind that if you use only the first specified value of it then it will return indexation of that particular element but if you tried you use the second element only then the indexation won,t work.
 tourSchema.index({ price: 1, ratingsAverage: -1 }); // indexing to make the query process shorter. sets the index for the property defined and the number sets order of sorting ascending or descending.
-tourSchema.index({ slug: 1 }); // indexing to make the query process shorter. sets the index for the property defined and the number sets order of sorting ascending or descending.
+tourSchema.index({ slug: 1 }); // indexing to make the query process shorter. sets the index for the property defined and the number sets order of sorting ascending or descending. // makes the querying much faster and efficient.
 tourSchema.index({ startLocation: '2dsphere' });
 
 tourSchema.virtual('durationWeeks').get(function() {

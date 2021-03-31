@@ -1,7 +1,7 @@
 const AppError = require('../utils/appError');
 
 const handleCastErrorDB = (err) => {
-	const message = `Invalid ${err.path}: ${err.value}.`;
+	const message = `Invalid ${err.path}: ${err.value}.`; // .path = _id , value = wrong value
 	return new AppError(message, 404);
 };
 
@@ -54,7 +54,7 @@ const sendErrorProd = (err, req, res) => {
 		}
 		// B) Programming or other unknown error: don't leak error details
 		// 1) Log error
-		console.error('Error 💥 ', err); 
+		console.error('Error 💥 ', err);
 		// 2) Send generic message
 		return res.status(500).json({
 			status: 'error',
@@ -91,8 +91,8 @@ module.exports = (err, req, res, next) => {
 		let error = { ...err }; //  Object.create(err) it also can make the error object it then imports the whole prototype cause in new mongoose update the name and many properties exist in the prototype.
 		error.message = err.message;
 
-		if (err.stack.includes('CastError')) error = handleCastErrorDB(error); // err.name == 'CastError' // mongoose error
-		if (error.code === 11000) error = handleDuplicateFieldsDB(error); // MongoDB error
+		if (err.stack.includes('CastError')) error = handleCastErrorDB(error); // err.name == 'CastError' // mongoose error // When mongoose is unable to find the specified id
+		if (error.code === 11000) error = handleDuplicateFieldsDB(error); // MongoDB error // When there are two similiar properties.
 		if (error._message === 'Validation failed') error = handleValidationErrorDB(error); // mongoose error
 		if (error.name === 'JsonWebTokenError') error = handleJWTError(); // Jwt sign verification error
 		if (error.name === 'TokenExpiredError') error = handleJWTExpiredError(); // Jwt time expired error.

@@ -39,9 +39,9 @@ exports.signup = catchAsync(async (req, res, next) => {
 		name: req.body.name,
 		email: req.body.email,
 		password: req.body.password,
-		confirmPassword: req.body.confirmPassword,
-		passwordChangedAt: req.body.passwordChangedAt,
-		role: req.body.role
+		confirmPassword: req.body.confirmPassword
+		// passwordChangedAt: req.body.passwordChangedAt,
+		// role: req.body.role
 	});
 	const url = `${req.protocol}://${req.get('host')}/me`;
 	// console.log(url);
@@ -58,7 +58,7 @@ exports.login = catchAsync(async (req, res, next) => {
 		return next(new AppError('Please provide email and password!', 400));
 	}
 	// 2) Check if user exists and password is correct.
-	const user = await User.findOne({ email }).select('+password');
+	const user = await User.findOne({ email }).select('+password'); // password is hidden so we have to select it to bring out the password
 
 	if (!user || !await user.correctPassword(password, user.password)) {
 		return next(new AppError('Incorrect email or password', 401));
@@ -70,7 +70,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
 exports.logout = (req, res) => {
 	res.cookie('jwt', 'logged out', {
-		expires: new Date(Date.now() + 10 * 1000),
+		expires: new Date(Date.now() + 10 * 1000), // 10 seconds
 		httpOnly: true
 	});
 	res.status(200).json({ status: 'success' });

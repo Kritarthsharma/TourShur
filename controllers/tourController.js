@@ -140,7 +140,7 @@ exports.getMonthlyStats = catchAsync(async (req, res, next) => {
 			$group: {
 				// only displays the field mentioned in it.
 				_id: { $month: '$startDates' }, // returns a month in a number format
-				numTourStarts: { $sum: 1 },
+				numTourStarts: { $sum: 1 }, // Amounts of tour in a particular month
 				tours: { $push: '$name' } // push creates an array and inserts the field whatever that we define in it
 			}
 		},
