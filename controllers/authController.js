@@ -16,8 +16,12 @@ const signToken = (id) =>
 const createSendToken = (user, statusCode, req, res) => {
   const token = signToken(user._id);
 
+  const expiresInMilliseconds =
+    process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000;
+  const expirationDate = new Date(Date.now() + expiresInMilliseconds);
+
   res.cookie("jwt", token, {
-    maxAge: process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
+    expires: expirationDate,
     httpOnly: true,
     secure: req.secure || req.headers["x-forwarded-proto"] === "https",
   });
