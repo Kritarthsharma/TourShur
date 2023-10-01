@@ -10,7 +10,7 @@ const Email = require("../utils/email");
 
 const signToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
+    expiresIn: "90d",
   });
 
 const createSendToken = (user, statusCode, req, res) => {
@@ -21,7 +21,7 @@ const createSendToken = (user, statusCode, req, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 1000
     ),
     httpOnly: true,
-    secure: true,
+    secure: req.secure || req.headers["x-forwarded-proto"] === "https",
   });
 
   //Remove Password from output.
